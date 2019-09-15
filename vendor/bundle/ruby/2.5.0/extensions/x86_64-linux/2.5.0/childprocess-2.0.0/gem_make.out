@@ -1,5 +1,0 @@
-current directory: /monolist/vendor/bundle/ruby/2.5.0/gems/childprocess-2.0.0/ext
-/usr/local/bin/ruby mkrf_conf.rb
-
-current directory: /monolist/vendor/bundle/ruby/2.5.0/gems/childprocess-2.0.0/ext
-/usr/local/bin/ruby -rrubygems /monolist/vendor/bundle/ruby/2.5.0/gems/rake-12.3.3/exe/rake RUBYARCHDIR\=/monolist/vendor/bundle/ruby/2.5.0/extensions/x86_64-linux/2.5.0/childprocess-2.0.0 RUBYLIBDIR\=/monolist/vendor/bundle/ruby/2.5.0/extensions/x86_64-linux/2.5.0/childprocess-2.0.0
