@@ -7,4 +7,12 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    header.navbar.navbar-fixed-top.navbar-inverse
+      div.container
+        = link_to "MONOLIST", '#', id:"logo"
+        nav
+          ul.nav.navbar-nav.navbar-right
+            li = link_to "ログイン", '#'
+            li = link_to "新規ユーザー登録", '#'
+      div.container
+        = yield
