@@ -2,12 +2,22 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe "#validates" do
-    let(:user) { User.new(
-      user_name: "test", 
-      account_name: "test",
-      email: "test@example.com",
-      password: "hogehoge"
-      ) }
+    let(:user) do
+      User.new(
+        user_name: "test", 
+        account_name: "test",
+        email: "test@example.com",
+        password: "hogehoge"
+      ) 
+    end
+    let(:other_user) do
+      User.new(
+        user_name: "test2",
+        account_name: "test2",
+        email: "test2@example.com",
+        password: "hogehoge"
+      )
+    end
 
     describe "presence" do
       context "ユーザ名、アカウント名、メールアドレス、パスワードが存在する場合" do
@@ -46,56 +56,80 @@ RSpec.describe User, type: :model do
           user.valid?
           expect(user.errors[:password]).to include("can't be blank")
         end
-       end
+      end
     end
     
     describe "length" do
-      context "ユーザー名が50文字の場合" do
-        example "有効になること" do
-          user.update_attributes(user_name: "a" * 50)
-          user.valid?
-          expect(user).to be_valid
+      describe "ユーザー名" do
+        context "50文字の場合" do
+          example "有効になること" do
+            user.update_attributes(user_name: "a" * 50)
+            user.valid?
+            expect(user).to be_valid
+          end
+        end
+
+        context "51文字の場合" do
+          example "無効になること" do
+            user.update_attributes(user_name: "a" * 51)
+            user.valid?
+            expect(user.errors[:user_name]).to include("is too long (maximum is 50 characters)")
+          end
         end
       end
 
-      context "ユーザー名が51文字の場合" do
-        example "無効になること" do
-          user.update_attributes(user_name: "a" * 51)
-          user.valid?
-          expect(user.errors[:user_name]).to include("is too long (maximum is 50 characters)")
+      describe "アカウント名" do
+        context "14文字の場合" do
+          example "有効になること" do
+            user.update_attributes(account_name: "a" * 14)
+            user.valid?
+            expect(user).to be_valid
+          end
+        end
+
+        context "15文字の場合" do
+          example "無効になること" do
+            user.update_attributes(account_name: "a" * 255)
+            user.valid?
+            expect(user.errors[:account_name]).to include("is too long (maximum is 14 characters)")
+          end
         end
       end
 
-      context "アカウント名が14文字の場合" do
-        example "有効になること" do
-          user.update_attributes(account_name: "a" * 14)
-          user.valid?
-          expect(user).to be_valid
+      describe "メールアドレス" do
+        context "メールアドレスが255文字の場合" do
+          example "有効になること" do
+            user.update_attributes(email: "a" * 243 + "@example.com")
+            user.valid?
+            expect(user).to be_valid
+          end
+        end
+
+        context " メールアドレスが256文字の場合" do
+          example "無効になること" do
+            user.update_attributes(email: "a" * 244 + "@example.com")
+            user.valid?
+            expect(user).not_to be_valid
+          end
         end
       end
 
-      context "アカウント名が15文字の場合" do
-        example "無効になること" do
-          user.update_attributes(account_name: "a" * 255)
-          user.valid?
-          expect(user.errors[:account_name]).to include("is too long (maximum is 14 characters)")
+      describe "パスワード" do
+        context "6文字の場合" do
+          example "有効になること" do
+            user.update_attributes(password: "a" * 6)
+            user.valid?
+            expect(user).to be_valid
+          end
         end
-      end
 
-      context "メールアドレスが255文字の場合" do
-        example "有効になること" do
-          user.update_attributes(email: "a" * 243 + "@example.com")
-          user.valid?
-          expect(user).to be_valid
-        end
-      end
-
-      context " メールアドレスが256文字の場合" do
-        example "無効になること" do
-          user.update_attributes(email: "a" * 244 + "@example.com")
-          user.valid?
-          expect(user).not_to be_valid
-        end
+        context "5文字の場合" do
+          example "無効になること" do
+            user.update_attributes(password: "a" * 5)
+            user.valid?
+            expect(user).not_to be_valid
+          end
+        end        
       end
     end
 
@@ -103,31 +137,51 @@ RSpec.describe User, type: :model do
       context "アカウント名が重複した場合" do
         example "無効になること" do
           user.save
-          user = User.new(
-            user_name: "test2",
-            account_name: "test",
-            email: "test2@example.com",
-            password: "hogehoge2"
-          )
-          user.valid?
-          expect(user.errors[:account_name]).to include("has already been taken")
+          other_user.account_name = user.account_name
+          other_user.valid?
+          expect(other_user.errors[:account_name]).to include("has already been taken")
         end
       end
 
       context "メールアドレスが重複した場合" do
         example "無効になること" do
           user.save
-          user = User.new(
-            user_name: "test2",
-            account_name: "test2",
-            email: "test@example.com",
-            password: "hogehoge2"
-          )
-          user.valid?
-          expect(user.errors[:email]).to include("has already been taken")
+          other_user.email = user.email
+          other_user.valid?
+          expect(other_user.errors[:email]).to include("has already been taken")
+        end
+      end
+
+      context "小文字と大文字でメードアドレスが重複した場合" do
+        example "無効になること" do
+          user.save
+          other_user.email = user.email.upcase
+          other_user.valid?
+          expect(other_user.errors[:email]).to include("has already been taken")
+        end
+      end
+    end
+
+    describe "format" do
+      context "有効なメールアドレスの場合" do
+        example "有効になること" do
+          valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org first.last@foo.jp alice+bob@baz.cn]
+          valid_addresses.each do |valid_address|
+            user.email = valid_address
+            expect(user).to be_valid
+          end
+        end
+      end
+
+      context "無効なメールアドレスの場合" do
+        example "無効になること" do
+          invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
+          invalid_addresses.each do |invalid_addresse|
+            user.email = invalid_addresse
+            expect(user).not_to be_valid
+          end
         end
       end
     end
   end
 end
-
