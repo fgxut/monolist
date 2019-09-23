@@ -4,12 +4,13 @@ RSpec.describe User, type: :model do
   describe "#validates" do
     let(:user) do
       User.new(
-        user_name: "test", 
+        user_name: "test",
         account_name: "test",
         email: "test@example.com",
         password: "hogehoge"
-      ) 
+      )
     end
+
     let(:other_user) do
       User.new(
         user_name: "test2",
@@ -29,7 +30,6 @@ RSpec.describe User, type: :model do
       context "ユーザー名が存在しない場合" do
         example "無効になること" do
           user.update_attributes(user_name: nil)
-          user.valid?
           expect(user.errors[:user_name]).to include("can't be blank")
         end
       end
@@ -37,7 +37,6 @@ RSpec.describe User, type: :model do
       context "アカウント名が存在しない場合" do
         example "無効になること" do
           user.update_attributes(account_name: nil)
-          user.valid?
           expect(user.errors[:account_name]).to include("can't be blank")
         end
       end
@@ -45,7 +44,6 @@ RSpec.describe User, type: :model do
       context "メールアドレスが存在しない場合" do
         example "無効になること" do
           user.update_attributes(email: nil)
-          user.valid?
           expect(user.errors[:email]).to include("can't be blank")
         end
       end
@@ -53,18 +51,16 @@ RSpec.describe User, type: :model do
       context "パスワードが存在しない場合" do
         example "無効になること" do
           user.update_attributes(password: nil)
-          user.valid?
           expect(user.errors[:password]).to include("can't be blank")
         end
       end
     end
-    
+
     describe "length" do
       describe "ユーザー名" do
         context "50文字の場合" do
           example "有効になること" do
             user.update_attributes(user_name: "a" * 50)
-            user.valid?
             expect(user).to be_valid
           end
         end
@@ -72,7 +68,6 @@ RSpec.describe User, type: :model do
         context "51文字の場合" do
           example "無効になること" do
             user.update_attributes(user_name: "a" * 51)
-            user.valid?
             expect(user.errors[:user_name]).to include("is too long (maximum is 50 characters)")
           end
         end
@@ -82,7 +77,6 @@ RSpec.describe User, type: :model do
         context "14文字の場合" do
           example "有効になること" do
             user.update_attributes(account_name: "a" * 14)
-            user.valid?
             expect(user).to be_valid
           end
         end
@@ -90,7 +84,6 @@ RSpec.describe User, type: :model do
         context "15文字の場合" do
           example "無効になること" do
             user.update_attributes(account_name: "a" * 255)
-            user.valid?
             expect(user.errors[:account_name]).to include("is too long (maximum is 14 characters)")
           end
         end
@@ -100,7 +93,6 @@ RSpec.describe User, type: :model do
         context "メールアドレスが255文字の場合" do
           example "有効になること" do
             user.update_attributes(email: "a" * 243 + "@example.com")
-            user.valid?
             expect(user).to be_valid
           end
         end
@@ -108,8 +100,7 @@ RSpec.describe User, type: :model do
         context " メールアドレスが256文字の場合" do
           example "無効になること" do
             user.update_attributes(email: "a" * 244 + "@example.com")
-            user.valid?
-            expect(user).not_to be_valid
+            expect(user.errors[:email]).to include("is too long (maximum is 255 characters)")
           end
         end
       end
@@ -118,7 +109,6 @@ RSpec.describe User, type: :model do
         context "6文字の場合" do
           example "有効になること" do
             user.update_attributes(password: "a" * 6)
-            user.valid?
             expect(user).to be_valid
           end
         end
@@ -126,10 +116,9 @@ RSpec.describe User, type: :model do
         context "5文字の場合" do
           example "無効になること" do
             user.update_attributes(password: "a" * 5)
-            user.valid?
             expect(user).not_to be_valid
           end
-        end        
+        end
       end
     end
 
