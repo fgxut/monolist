@@ -6,12 +6,12 @@ h1 ユーザー登録
     = form_for(@user, url: signup_path) do |f|
       = render 'shared/error_messages'
 
+      = f.label :account_name, "MONOLIST ID"
+      = f.text_field :account_name, class: 'form-control' 
+      
       = f.label :user_name, "ユーザー名"
       = f.text_field :user_name, class: 'form-control' 
 
-      = f.label :account_name, "アカウント名"
-      = f.text_field :account_name, class: 'form-control' 
-      
       = f.label :email, "メールアドレス"
       = f.email_field :email, class: 'form-control' 
       
