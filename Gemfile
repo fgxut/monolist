@@ -40,6 +40,9 @@ gem 'slim-rails'
 gem 'html2slim'
 gem 'bootstrap-sass', '>= 3.4.1'
 gem 'bcrypt'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'jquery-rails'
 
 group :development, :test do
