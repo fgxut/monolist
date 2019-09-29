@@ -1,0 +1,5 @@
+| こんにちは 、
+= @user.user_name
+| さん
+|  MONOLISTへようこそ！ あなたのアカウントを有効にするために、下記のリンクをクリックしてください。
+= edit_account_activation_url(@user.activation_token, email: @user.email)
