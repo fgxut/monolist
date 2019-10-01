@@ -1,0 +1,5 @@
+= link_to gravatar_for(current_user, size: 50), current_user
+h1 = current_user.user_name
+span = link_to "自分の持ち物", current_user, class: "btn btn-lg btn-primary"
+span = link_to "持ち物投稿", new_user_item_path(current_user), class: "btn btn-lg btn-primary"
+span = pluralize(current_user.items.count, "item")

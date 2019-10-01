@@ -1,6 +1,16 @@
 - provide(:title, @user.user_name)
-h1
-  = gravatar_for @user
-  = @user.user_name
-  | @
-  = @user.account_name
+.row
+  aside.col-md-4
+    section.user_info
+      h1
+        = gravatar_for @user
+        = @user.user_name
+  .col-md-8
+    - if @user.items.any?
+      h3
+        | items (
+        = @user.items.count
+        | )
+      ol.items
+        = render @items
+      = will_paginate @items

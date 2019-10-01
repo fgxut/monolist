@@ -1,6 +1,14 @@
 - provide(:title, "MONOLIST")
-.center.jumbotron
-  h1 MONOLIST
-  p あなたの持ち物を一覧にしよう
-  = link_to "ログイン", login_path, class: "btn btn-lg btn-primary"
-  = link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary"
+- if logged_in?
+  .row
+    aside.col-md-4
+      section.user_info
+        = render 'shared/user_info'
+      section.item_form
+        = render 'shared/item_form'
+- else
+  .center.jumbotron
+    h1 MONOLIST
+    p あなたの持ち物を一覧にしよう
+    = link_to "ログイン", login_path, class: "btn btn-lg btn-primary"
+    = link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary"
