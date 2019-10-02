@@ -8,3 +8,5 @@ span.timestamp
   |  Posted 
   = time_ago_in_words(item.created_at)
   |  ago. 
+  - if current_user?(item.user)
+    = link_to "削除", user_item_path(current_user.id, item.id), method: :delete, data: { confirm: "本当に削除しますか?" }
