@@ -3,7 +3,9 @@
 | "> 
 = link_to gravatar_for(item.user, size: 50), item.user
 span.user = link_to item.user.user_name, item.user
-span.content = item.content
+span.content
+  = item.content
+  = image_tag item.picture.url if item.picture?
 span.timestamp
   |  Posted 
   = time_ago_in_words(item.created_at)

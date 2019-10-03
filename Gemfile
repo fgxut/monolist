@@ -41,6 +41,9 @@ gem 'html2slim'
 gem 'bootstrap-sass', '>= 3.4.1'
 gem 'bcrypt'
 gem 'faker'
+gem 'rubocop-faker'
+gem 'carrierwave'
+gem 'mini_magick'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'jquery-rails'
@@ -67,6 +70,11 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+end
+
+group :production do
+  gem 'pg'
+  gem 'fog'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

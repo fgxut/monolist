@@ -1,5 +1,11 @@
-= form_for(@item, url: user_items_path) do |f|
-  = render 'shared/error_messages', object: f.object
-  .field
-    = f.text_area :content, placeholder: "持ち物の内容を書く……"
-  = f.submit "投稿する", class: "btn btn-primary"
+= provide(:title, "新しい持ち物")
+h1.text-center.my-3 新しい持ち物
+.row
+  .col-md-6.col-md-offset-3.mx-auto.d-block
+    = form_for(@item, url: user_items_path) do |f|
+      = render 'shared/error_messages', object: f.object
+      .field
+        = f.text_area :content, placeholder: "持ち物の内容"
+      = f.submit "投稿する", class: "btn btn-primary"
+      span.picture = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+    = javascript_include_tag "items_new.js"
