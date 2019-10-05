@@ -7,7 +7,7 @@
       span = link_to "view my profile", @user
       span
         b
-          | items:
+          | 持ち物:
         = @user.items.count
     section.stats
       = render 'shared/stats'
