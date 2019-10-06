@@ -1,12 +1,12 @@
 - provide(:title, "MONOLIST")
 - if logged_in?
   .row
-    aside.col-md-4
+    aside.col-md-12
       section.user_info
         = render 'shared/user_info'
       section.stats
         = render 'shared/stats'
-    .col-md-8
+    .col-md-12
       h3  持ち物リスト
       = render 'shared/feed'
 - else
