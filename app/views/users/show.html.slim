@@ -2,9 +2,13 @@
 .row
   aside.col-md-12
     section.user_info
-      h1
-        = gravatar_for @user
-        = @user.user_name
+      .media
+        - if @user.picture?
+          = image_tag @user.picture.url
+        - else
+          = image_tag("user_initial.png", class: "initial_user")
+        .media-body
+          = @user.user_name
     section.stats
       = render 'shared/stats'
   .col-md-12
