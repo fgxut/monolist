@@ -1,6 +1,6 @@
 - provide(:title, @title)
 .row
-  aside.col-md-4
+  aside.col-md-12
     section.user_info
       = gravatar_for @user
       h1 = @user.user_name
@@ -15,7 +15,7 @@
         .user_avatars
           - @users.each do |user|
             = link_to gravatar_for(user, size: 30), user
-  .col-md-8
+  .col-md-12
     h3
       = @title
     - if @users.any?
