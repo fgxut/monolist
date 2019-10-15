@@ -1,4 +1,8 @@
-= link_to gravatar_for(current_user, size: 50), current_user
+.picture
+  - if current_user.picture?
+    = image_tag current_user.picture.url
+  - else
+    = link_to image_tag("user_initial.png", width: '100', height: '100'), user_path(current_user.id)
 h1 = current_user.user_name
 span = link_to "自分の持ち物", current_user, class: "btn btn-lg btn-primary"
 span = link_to "持ち物投稿", new_user_item_path(current_user), class: "btn btn-lg btn-primary"

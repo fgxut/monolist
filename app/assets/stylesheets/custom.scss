@@ -132,12 +132,12 @@ aside {
   }
 }
 
-.gravatar {
+.picture {
   float: left;
   margin-right: 10px;
 }
 
-.gravatar_edit {
+.picture_edit {
   margin-top: 15px;
 }
 
@@ -164,10 +164,10 @@ aside {
   }
 }
 
-.user_avatars {
+.user_pictures {
   overflow: auto;
   margin-top: 10px;
-  .gravatar {
+  .picture {
     margin: 1px 1px;
   }
   a {
@@ -264,7 +264,7 @@ input {
     display: block;
     margin-left: 60px;
   }
-  .gravatar {
+  .picture {
     float: left;
     margin-right: 10px;
     margin-top: 5px;

@@ -6,7 +6,7 @@
         - if @user.picture?
           = image_tag @user.picture.url
         - else
-          = image_tag("user_initial.png", class: "initial_user")
+          = link_to image_tag("user_initial.png", width: '150', height: '150'), user_path(@user.id)
         .media-body
           = @user.user_name
     section.stats

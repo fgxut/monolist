@@ -6,6 +6,6 @@ h1.text-center.my-3 新しい持ち物
       = render 'shared/error_messages', object: f.object
       .field
         = f.text_area :content, placeholder: "持ち物の内容"
-      = f.submit "投稿する", class: "btn btn-primary"
       span.picture = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = f.submit "投稿する", class: "btn btn-primary"
     = javascript_include_tag "items_new.js"

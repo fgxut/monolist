@@ -1,8 +1,11 @@
 - provide(:title, @title)
 .row
   aside.col-md-12
-    section.user_info
-      = gravatar_for @user
+    section.user_info.picture
+      - if @user.picture?
+        = image_tag @user.picture.url, width: '100', height: '100'
+      - else
+        = link_to image_tag("user_initial.png", width: '100', height: '100'), user_path(@user.id)
       h1 = @user.user_name
       span = link_to "プロフィール", @user
       span
@@ -12,9 +15,12 @@
     section.stats
       = render 'shared/stats'
       - if @users.any?
-        .user_avatars
+        .user_pictures.picture 
           - @users.each do |user|
-            = link_to gravatar_for(user, size: 30), user
+            - if user.picture?
+              = image_tag user.picture.url, width: '30', height: '30'
+            - else
+              = link_to image_tag("user_initial.png", width: '30', height: '30'), user_path(user.id)
   .col-md-12
     h3
       = @title
