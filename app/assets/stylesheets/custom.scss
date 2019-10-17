@@ -134,7 +134,7 @@ aside {
 
 .picture {
   float: left;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .picture_edit {
@@ -167,11 +167,8 @@ aside {
 .user_pictures {
   overflow: auto;
   margin-top: 10px;
-  .picture {
-    margin: 1px 1px;
-  }
   a {
-    padding: 0;
+    padding: 0 1px;
   }
 }
 
