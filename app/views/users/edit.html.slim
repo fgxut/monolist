@@ -21,6 +21,9 @@ h1 基本設定
       = f.label :password_confirmation, "パスワード確認"
       = f.password_field :password_confirmation, class: 'form-control' 
 
+      = f.label :profile, "自己紹介"
+      = f.text_area :profile, class: 'form-control', size: "60x10"
+
       span.picture = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
       
       = f.submit "変更する", class: "btn btn-primary"
