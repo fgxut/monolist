@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
   private
 
     def item_params
-      params.require(:item).permit(:content, :picture)
+      params.require(:item).permit(:content, :picture, :rating)
     end
 
     def correct_user

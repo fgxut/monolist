@@ -5,7 +5,20 @@ h1.text-center.my-3 新しい持ち物
     = form_for(@item, url: user_items_path) do |f|
       = render 'shared/error_messages', object: f.object
       .field
-        = f.text_area :content, placeholder: "持ち物の内容"
+        = f.label :content, "内容"
+        = f.text_area :content, placeholder: "持ち物の内容", class: 'form-control'
+        #star
+          = f.label :rating,'評価 ', class:'col-md-3 col-form-label'
+          = f.hidden_field :rating, id: :review_star
+        script
+          |  $('#star').raty({
+          |    size : 36,
+          |    starOff: '<ruby code="= asset_path('star-off.png')"></ruby>',
+          |    starOn : '<ruby code="= asset_path('star-on.png')"></ruby>',
+          |    starHalf: '<ruby code="= asset_path('star-half.png')"></ruby>',
+          |    scoreName: 'item[rating]',
+          |    half: true,
+          |  }); 
       span.picture = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
       = f.submit "投稿する", class: "btn btn-primary"
     = javascript_include_tag "items_new.js"
