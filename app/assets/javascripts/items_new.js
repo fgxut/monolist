@@ -4,3 +4,12 @@ $('#item_picture').bind('change', function(){
     alert('最大ファイルサイズは2MBです。小さいファイルを選択してください。')
   }
 });
+
+$('#star').raty({
+  size : 36,
+  starOff:  '<%= asset_path('star-off.png') %>',
+  starOn : '<%= asset_path('star-on.png') %>',
+  starHalf: '<%= asset_path('star-half.png') %>',
+  scoreName: 'item[rating]',
+  half: true,
+}); 
