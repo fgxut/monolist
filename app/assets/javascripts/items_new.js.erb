@@ -1,0 +1,17 @@
+$('#item_picture').bind('change', function(){
+  var size_in_megabytes = this.files[0].size/1024/1024;
+  if (size_in_megabytes > 2) {
+    alert('最大ファイルサイズは2MBです。小さいファイルを選択してください。')
+  }
+});
+
+$(document).ready(function() {
+  $('#star').raty({
+    size : 36,
+    starOff: "<%= asset_path("star-off.png") %>",
+    starOn: "<%= asset_path("star-on.png") %>",
+    starHalf: "<%= asset_path("star-half.png") %>",
+    scoreName: "item[rating]",
+    half: true,
+  });
+})
