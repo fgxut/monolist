@@ -9,9 +9,18 @@ span.user = link_to item.user.user_name, item.user
 span.content
   = item.content
   = image_tag item.picture.url if item.picture?
+span.rating
+  h4.mb-3
+    | 評価：
+    = item.rating
+    | 点
+  | <div id="star-rate-
+  = item.id
+  | ">
 span.timestamp
   |  Posted 
   = time_ago_in_words(item.created_at)
   |  ago. 
   - if current_user?(item.user)
     = link_to "削除", user_item_path(current_user.id, item.id), method: :delete, data: { confirm: "本当に削除しますか?" }
+= javascript_include_tag "rating_result.js"
