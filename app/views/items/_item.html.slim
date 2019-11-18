@@ -23,4 +23,15 @@ span.timestamp
   |  ago. 
   - if current_user?(item.user)
     = link_to "削除", user_item_path(current_user.id, item.id), method: :delete, data: { confirm: "本当に削除しますか?" }
-= javascript_include_tag "rating_result.js"
+javascript:
+  $(document).ready(function() {
+    $('#star-rate-#{item.id}').raty({
+      size: 36,
+      starOff: '#{asset_path('star-off.png')}',
+      starOn : '#{asset_path('star-on.png')}',
+      starHalf: '#{asset_path('star-half.png')}',
+      half: true,
+      readOnly: true,
+      score: #{item.rating},
+    });
+  })
