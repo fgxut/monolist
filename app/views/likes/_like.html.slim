@@ -1,0 +1,12 @@
+- if !current_user?(item.user)
+  span.like
+    - if item.iine?(current_user)
+      = form_for(item.likes.find_by(user_id: current_user.id), method: :delete, remote: true) do |f|
+        = button_tag(class: "btn btn-default btn-xs") do
+          = content_tag :span, "#{item.likes_count}", class: "glyphicon glyphicon-heart"
+    - else
+      = form_for(item.likes.build, remote: true) do |f|
+        div
+          = hidden_field_tag :item_id, item.id
+        = button_tag(class: "btn btn-default btn-xs") do
+          = content_tag :span, "#{item.likes_count}", class: "glyphicon glyphicon-heart-empty"

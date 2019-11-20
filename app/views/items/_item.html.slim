@@ -17,6 +17,8 @@ span.rating
   | <div id="star-rate-
   = item.id
   | ">
+span.iine
+  = render "likes/like", item: item
 span.timestamp
   |  Posted 
   = time_ago_in_words(item.created_at)
