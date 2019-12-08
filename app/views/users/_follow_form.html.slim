@@ -1,6 +1,6 @@
 - unless current_user?(@user)
   #follow_form
     - if current_user.following?(@user)
-      = link_to "フォロー解除", relationship_path(followed_id: @user.id), method: :delete
+      = render 'unfollow'
     - else
-      = link_to "フォローする", relationships_path(followed_id: @user.id), method: :post
+      = render 'follow'
