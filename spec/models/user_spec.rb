@@ -1,5 +1,33 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :bigint           not null, primary key
+#  account_name      :string(255)
+#  activated         :boolean          default(FALSE)
+#  activated_at      :datetime
+#  activation_digest :string(255)
+#  admin             :boolean          default(FALSE)
+#  email             :string(255)
+#  password_digest   :string(255)
+#  picture           :string(255)
+#  profile           :text(65535)
+#  remember_digest   :string(255)
+#  reset_digest      :string(255)
+#  reset_sent_at     :datetime
+#  user_name         :string(255)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_account_name  (account_name) UNIQUE
+#  index_users_on_email         (email) UNIQUE
+#
+
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
