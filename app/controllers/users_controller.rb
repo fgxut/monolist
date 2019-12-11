@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :logged_in_user,  only: [:index, :edit, :update, :destroy, :following, :followers]
-  before_action :correct_user,    only: [:edit, :update]
+  before_action :logged_in_user,  only: %i[index edit update destroy following followers]
+  before_action :correct_user,    only: %i[edit update]
   before_action :admin_user,      only: :destroy
 
   def index
-     @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
@@ -20,7 +22,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      flash[:info] = "メールを確認してアカウントを有効にしてください"
+      flash[:info] = 'メールを確認してアカウントを有効にしてください'
       redirect_to root_url
     else
       render 'new'
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = "プロフィールが更新されました"
+      flash[:success] = 'プロフィールが更新されました'
       redirect_to @user
     else
       render 'edit'
@@ -42,14 +44,14 @@ class UsersController < ApplicationController
   end
 
   def following
-    @title = "フォロー中"
+    @title = 'フォロー中'
     @user  = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
     render 'show_follow'
   end
 
   def followers
-    @title = "フォロワー"
+    @title = 'フォロワー'
     @user  = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
@@ -57,16 +59,16 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-      params.require(:user).permit(:user_name, :account_name, :email, :password, :password_confirmation, :picture, :profile)
-    end
+  def user_params
+    params.require(:user).permit(:user_name, :account_name, :email, :password, :password_confirmation, :picture, :profile)
+  end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 end

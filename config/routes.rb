@@ -1,4 +1,6 @@
-Rails.application.routes.draw do 
+# frozen_string_literal: true
+
+Rails.application.routes.draw do
   root   'static_pages#home'
   get    '/top',     to: 'static_pages#top'
   get    '/home',    to: 'static_pages#home'
@@ -11,13 +13,13 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   resources :users do
-    resources :items, only: [:new, :create, :destroy]
+    resources :items, only: %i[new create destroy]
     member do
       get :following, :followers
     end
   end
   resources :account_activations, only: [:edit]
-  resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :relationships,       only: [:create, :destroy], param: :followed_id
-  resources :likes,               only: [:create, :destroy]
+  resources :password_resets,     only: %i[new create edit update]
+  resources :relationships,       only: %i[create destroy], param: :followed_id
+  resources :likes,               only: %i[create destroy]
 end

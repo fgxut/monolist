@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddLikesCountToItems < ActiveRecord::Migration[5.1]
   class MigrationUser < ApplicationRecord
     self.table_name = :items
@@ -5,7 +7,7 @@ class AddLikesCountToItems < ActiveRecord::Migration[5.1]
 
   def up
     _up
-  rescue => e
+  rescue StandardError => e
     _down
     raise e
   end
@@ -19,7 +21,9 @@ class AddLikesCountToItems < ActiveRecord::Migration[5.1]
   def _up
     MigrationUser.reset_column_information
 
-    add_column :items, :likes_count, :integer, null: false, default: 0 unless column_exists? :items, :likes_count
+    unless column_exists? :items, :likes_count
+      add_column :items, :likes_count, :integer, null: false, default: 0
+    end
   end
 
   def _down
