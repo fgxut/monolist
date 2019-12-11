@@ -17,7 +17,6 @@
 #  index_likes_on_user_id_and_item_id  (user_id,item_id) UNIQUE
 #
 
-
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do

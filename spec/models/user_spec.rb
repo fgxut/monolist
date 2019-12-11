@@ -27,7 +27,6 @@
 #  index_users_on_email         (email) UNIQUE
 #
 
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do

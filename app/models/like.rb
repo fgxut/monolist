@@ -17,7 +17,6 @@
 #  index_likes_on_user_id_and_item_id  (user_id,item_id) UNIQUE
 #
 
-
 class Like < ApplicationRecord
   belongs_to :user
   belongs_to :item
