@@ -48,11 +48,11 @@ gem 'faker'
 gem 'html2slim'
 gem 'jquery-rails'
 gem 'mini_magick'
+gem 'rails-i18n', '~> 5.1'
 gem 'ransack'
 gem 'rubocop-faker'
 gem 'slim-rails'
 gem 'will_paginate'
-gem 'rails-i18n', '~> 5.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
