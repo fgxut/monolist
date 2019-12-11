@@ -554,6 +554,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   ransack
   rspec-rails (~> 3.8)
+  rubocop
   rubocop-faker
   sass-rails (~> 5.0)
   selenium-webdriver

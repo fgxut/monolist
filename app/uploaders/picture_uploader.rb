@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process resize_to_limit: [150, 150]
@@ -13,6 +15,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 end

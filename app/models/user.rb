@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :active_relationships,  class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :active_relationships,  class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   mount_uploader :picture, PictureUploader
@@ -11,20 +13,20 @@ class User < ApplicationRecord
   before_create :create_activation_digest
   validates :user_name, presence: true, length: { maximum: 50 }
   validates :account_name, presence: true, length: { maximum: 14 }, uniqueness: true
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, length: { maximum: 255}, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validate  :picture_size
   validates :profile, length: { maximum: 1000 }
 
-  def User.digest(string)
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -36,6 +38,7 @@ class User < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -65,7 +68,7 @@ class User < ApplicationRecord
   end
 
   def feed
-    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    following_ids = 'SELECT followed_id FROM relationships WHERE follower_id = :user_id'
     Item.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
@@ -83,18 +86,16 @@ class User < ApplicationRecord
 
   private
 
-    def downcase_email
-      self.email = email.downcase
-    end
+  def downcase_email
+    self.email = email.downcase
+  end
 
-    def create_activation_digest
-      self.activation_token = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 
-    def picture_size
-      if picture.size > 5.megabytes
-        errors.add(:picture, "5MB未満でなければなりません")
-      end
-    end
+  def picture_size
+    errors.add(:picture, '5MB未満でなければなりません') if picture.size > 5.megabytes
+  end
 end

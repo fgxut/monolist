@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Item < ApplicationRecord
   belongs_to :user
   has_many :likes, dependent: :destroy
@@ -22,9 +24,7 @@ class Item < ApplicationRecord
 
   private
 
-    def picture_size
-      if picture.size > 5.megabytes
-        errors.add(:picture, "5MB未満でなければなりません")
-      end
-    end
+  def picture_size
+    errors.add(:picture, '5MB未満でなければなりません') if picture.size > 5.megabytes
+  end
 end
