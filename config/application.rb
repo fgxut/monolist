@@ -15,11 +15,11 @@ module Monolist
     config.generators.template_engine = :slim
 
     config.generators do |g|
-      g.test_framework :rspec,
-                       fixtures: false,
-                       view_specs: false,
-                       helper_specs: false,
-                       routing_specs: false
+      g.skip_routes true
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.test_framework false
     end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

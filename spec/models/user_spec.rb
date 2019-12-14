@@ -59,28 +59,28 @@ RSpec.describe User, type: :model do
       context 'ユーザー名が存在しない場合' do
         example '無効になること' do
           user.update_attributes(user_name: nil)
-          expect(user.errors[:user_name]).to include("can't be blank")
+          expect(user.errors[:user_name]).to include("を入力してください")
         end
       end
 
       context 'アカウント名が存在しない場合' do
         example '無効になること' do
           user.update_attributes(account_name: nil)
-          expect(user.errors[:account_name]).to include("can't be blank")
+          expect(user.errors[:account_name]).to include("を入力してください")
         end
       end
 
       context 'メールアドレスが存在しない場合' do
         example '無効になること' do
           user.update_attributes(email: nil)
-          expect(user.errors[:email]).to include("can't be blank")
+          expect(user.errors[:email]).to include("を入力してください")
         end
       end
 
       context 'パスワードが存在しない場合' do
         example '無効になること' do
           user.update_attributes(password: nil)
-          expect(user.errors[:password]).to include("can't be blank")
+          expect(user.errors[:password]).to include("を入力してください")
         end
       end
     end
@@ -97,7 +97,7 @@ RSpec.describe User, type: :model do
         context '51文字の場合' do
           example '無効になること' do
             user.update_attributes(user_name: 'a' * 51)
-            expect(user.errors[:user_name]).to include('is too long (maximum is 50 characters)')
+            expect(user.errors[:user_name]).to include('は50文字以内で入力してください')
           end
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe User, type: :model do
         context '15文字の場合' do
           example '無効になること' do
             user.update_attributes(account_name: 'a' * 255)
-            expect(user.errors[:account_name]).to include('is too long (maximum is 14 characters)')
+            expect(user.errors[:account_name]).to include('は14文字以内で入力してください')
           end
         end
       end
@@ -129,7 +129,7 @@ RSpec.describe User, type: :model do
         context ' メールアドレスが256文字の場合' do
           example '無効になること' do
             user.update_attributes(email: 'a' * 244 + '@example.com')
-            expect(user.errors[:email]).to include('is too long (maximum is 255 characters)')
+            expect(user.errors[:email]).to include('は255文字以内で入力してください')
           end
         end
       end
@@ -157,7 +157,7 @@ RSpec.describe User, type: :model do
           user.save
           other_user.account_name = user.account_name
           other_user.valid?
-          expect(other_user.errors[:account_name]).to include('has already been taken')
+          expect(other_user.errors[:account_name]).to include('はすでに存在します')
         end
       end
 
@@ -166,7 +166,7 @@ RSpec.describe User, type: :model do
           user.save
           other_user.email = user.email
           other_user.valid?
-          expect(other_user.errors[:email]).to include('has already been taken')
+          expect(other_user.errors[:email]).to include('はすでに存在します')
         end
       end
 
@@ -175,7 +175,7 @@ RSpec.describe User, type: :model do
           user.save
           other_user.email = user.email.upcase
           other_user.valid?
-          expect(other_user.errors[:email]).to include('has already been taken')
+          expect(other_user.errors[:email]).to include('はすでに存在します')
         end
       end
     end
